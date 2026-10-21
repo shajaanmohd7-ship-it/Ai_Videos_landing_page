@@ -13,13 +13,13 @@ class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
 
 class CustomRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_HEAD(self):
-        if self.path.startswith('/video'):
+        if self.path.startswith('/video') or self.path.startswith('/api/video'):
             self.handle_video(head_only=True)
         else:
             super().do_HEAD()
 
     def do_GET(self):
-        if self.path.startswith('/video'):
+        if self.path.startswith('/video') or self.path.startswith('/api/video'):
             self.handle_video(head_only=False)
         else:
             super().do_GET()

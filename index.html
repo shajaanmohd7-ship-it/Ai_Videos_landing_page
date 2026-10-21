@@ -469,6 +469,17 @@
                     <span class="text-xs font-medium text-slate-300">Loading video...</span>
                 </div>
 
+                <!-- Error fallback -->
+                <div id="playerError" class="hidden absolute inset-0 flex flex-col items-center justify-center text-slate-300 gap-3 bg-dark-base/95 z-25 p-6 text-center">
+                    <i data-lucide="alert-circle" class="w-10 h-10 text-amber-400"></i>
+                    <p class="text-sm font-medium text-slate-200">Video streaming direct link</p>
+                    <a id="errorDriveBtn" href="#" target="_blank" rel="noopener noreferrer" 
+                       class="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-dark-base font-bold text-xs flex items-center gap-2 transition-all">
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                        <span>Open in Google Drive</span>
+                    </a>
+                </div>
+
                 <!-- Normal Browser Native Video Player -->
                 <video id="browserVideoPlayer" 
                        class="w-full h-full object-contain" 
@@ -702,6 +713,11 @@
 
             if (loader) loader.classList.remove('hidden');
 
+            const errorBox = document.getElementById('playerError');
+            if (errorBox) errorBox.classList.add('hidden');
+            const errorBtn = document.getElementById('errorDriveBtn');
+            if (errorBtn) errorBtn.href = video.driveUrl;
+
             // Wire up event listeners
             player.oncanplay = () => {
                 if (loader) loader.classList.add('hidden');
@@ -712,9 +728,13 @@
             player.onwaiting = () => {
                 if (loader) loader.classList.remove('hidden');
             };
+            player.onerror = () => {
+                if (loader) loader.classList.add('hidden');
+                if (errorBox) errorBox.classList.remove('hidden');
+            };
 
-            // Stream directly through same-origin proxy
-            player.src = `/video?id=${video.id}`;
+            // Stream directly through same-origin proxy (works on both local server and Vercel)
+            player.src = `/api/video?id=${video.id}`;
             player.poster = video.thumbnail || video.remoteThumbnail || '';
             player.load();
             player.play().catch(() => {
