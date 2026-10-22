@@ -217,7 +217,27 @@ html_template = f'''<!DOCTYPE html>
     <main class="w-full overflow-x-hidden flex-1 flex flex-col">
         <!-- Hero Section -->
         <section class="relative pt-6 pb-10 sm:pt-14 sm:pb-20 overflow-hidden z-10 w-full">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <!-- Cinematic Background Video Layer -->
+            <div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+                <video id="heroBgVideo" 
+                       autoplay 
+                       loop 
+                       muted 
+                       playsinline 
+                       preload="auto"
+                       poster="thumbnails/1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa.jpg" 
+                       class="w-full h-full object-cover opacity-25 sm:opacity-30 scale-105 filter blur-[0.5px] transition-opacity duration-1000">
+                    <source src="/video.php?id=1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa" type="video/mp4">
+                    <source src="/api/video?id=1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa" type="video/mp4">
+                </video>
+
+                <!-- Left Dark Gradient for ultra-clear typography contrast -->
+                <div class="absolute inset-0 bg-gradient-to-r from-dark-base via-dark-base/90 to-dark-base/60"></div>
+                <!-- Top & Bottom smooth fades into navbar and portfolio grid -->
+                <div class="absolute inset-0 bg-gradient-to-b from-dark-base/90 via-transparent to-dark-base"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-12 items-center w-full">
                     
                     <!-- Hero Left: Content -->
@@ -538,6 +558,12 @@ html_template = f'''<!DOCTYPE html>
         document.addEventListener('DOMContentLoaded', () => {{
             renderVideoGrid(ALL_VIDEOS);
             lucide.createIcons();
+            
+            // Hero background video play trigger
+            const bgVideo = document.getElementById('heroBgVideo');
+            if (bgVideo) {{
+                bgVideo.play().catch(() => {{}});
+            }}
             
             // Search input listener
             document.getElementById('searchInput').addEventListener('input', (e) => {{
