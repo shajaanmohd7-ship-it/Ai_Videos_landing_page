@@ -172,6 +172,16 @@ html_template = f'''<!DOCTYPE html>
             justify-content: center;
             overflow: hidden;
         }}
+    
+        
+        /* Clean, natural text lift: floating text with high legibility without muddy darkness */
+        .hero-title-clean {{
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 3px 8px rgba(0, 0, 0, 0.7);
+        }}
+
+        .hero-text-clean {{
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 6px rgba(0, 0, 0, 0.7);
+        }}
     </style>
 </head>
 <body class="bg-dark-base text-slate-100 font-sans selection:bg-cyan-500 selection:text-white min-h-screen flex flex-col relative w-full overflow-x-hidden antialiased">
@@ -187,15 +197,14 @@ html_template = f'''<!DOCTYPE html>
     <header class="sticky top-0 z-40 glass-panel border-b border-dark-border/80 w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-18 flex items-center justify-between gap-3">
             
-            <!-- Clean Brand Title (No logo icon, no AI badge) -->
-            <a href="#" class="font-display font-extrabold text-lg sm:text-2xl text-white tracking-tight hover:text-cyan-400 transition-colors truncate">
-                Sociallyconnect
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 flex-shrink-0 group">
+                <img src="logo.png" alt="Sociallyconnect" class="h-8 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105" onerror="this.onerror=null; this.src='logo_original.png'">
             </a>
 
             <!-- Desktop Nav items -->
             <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
-                <a href="#featured" class="hover:text-cyan-400 transition-colors">Spotlight</a>
-                <a href="#portfolio" class="hover:text-cyan-400 transition-colors">All Videos (50)</a>
+                <a href="#portfolio" class="hover:text-cyan-400 transition-colors">Portfolio Gallery (50 Videos)</a>
             </nav>
 
             <!-- Header Actions -->
@@ -215,115 +224,64 @@ html_template = f'''<!DOCTYPE html>
 
     <!-- Main Content Container with strict w-full overflow-hidden -->
     <main class="w-full overflow-x-hidden flex-1 flex flex-col">
-        <!-- Hero Section -->
-        <section class="relative pt-6 pb-10 sm:pt-14 sm:pb-20 overflow-hidden z-10 w-full">
-            <!-- Cinematic Background Video Layer -->
-            <div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <!-- Hero Section (100% Full Uncropped 16:9 on Mobile, Cinematic Full-bleed on Desktop) -->
+        <section class="relative overflow-hidden z-10 w-full sm:min-h-[580px] lg:min-h-[640px] flex flex-col justify-end">
+            <!-- Cinematic Background Video Layer (Native 16:9 on mobile = ZERO cropping on sides) -->
+            <div class="relative w-full aspect-video sm:aspect-auto sm:absolute sm:inset-0 sm:w-full sm:h-full overflow-hidden pointer-events-none z-0">
                 <video id="heroBgVideo" 
+                       src="/video.php?id=1jdO2lXa_hAcCZsiE6VNDMnSyH2Zgf4tA"
                        autoplay 
                        loop 
                        muted 
                        playsinline 
                        preload="auto"
-                       poster="thumbnails/1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa.jpg" 
-                       class="w-full h-full object-cover opacity-25 sm:opacity-30 scale-105 filter blur-[0.5px] transition-opacity duration-1000">
-                    <source src="/video.php?id=1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa" type="video/mp4">
-                    <source src="/api/video?id=1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa" type="video/mp4">
+                       poster="thumbnails/1jdO2lXa_hAcCZsiE6VNDMnSyH2Zgf4tA.jpg" 
+                       class="w-full h-full object-cover">
+                    <source src="/video.php?id=1jdO2lXa_hAcCZsiE6VNDMnSyH2Zgf4tA" type="video/mp4">
+                    <source src="/api/video?id=1jdO2lXa_hAcCZsiE6VNDMnSyH2Zgf4tA" type="video/mp4">
                 </video>
 
-                <!-- Left Dark Gradient for ultra-clear typography contrast -->
-                <div class="absolute inset-0 bg-gradient-to-r from-dark-base via-dark-base/90 to-dark-base/60"></div>
-                <!-- Top & Bottom smooth fades into navbar and portfolio grid -->
-                <div class="absolute inset-0 bg-gradient-to-b from-dark-base/90 via-transparent to-dark-base"></div>
+                <!-- Smooth bottom fade on mobile into text area -->
+                <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-dark-base via-dark-base/70 to-transparent pointer-events-none sm:hidden"></div>
             </div>
 
-            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-12 items-center w-full">
+            <!-- Left-Bottom Aligned Hero Content -->
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full -mt-6 sm:mt-0 pt-0 sm:pt-10 pb-6 sm:pb-20 lg:pb-28">
+                <div class="max-w-xl lg:max-w-2xl space-y-3 sm:space-y-4 text-left w-full">
                     
-                    <!-- Hero Left: Content -->
-                    <div class="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left w-full">
-                        
-                        <h1 class="font-display font-extrabold text-2xl xs:text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.2] break-words">
-                            Cinematic AI Stories & High-Converting <span class="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">Commercial TVCs</span>
-                        </h1>
+                    <h1 class="font-display font-extrabold text-xl xs:text-2xl sm:text-3xl lg:text-4xl text-white tracking-tight leading-[1.2] sm:leading-[1.25] break-words hero-title-clean">
+                        Cinematic AI Stories & High-Converting <span class="text-cyan-400 font-extrabold">Commercial TVCs</span>
+                    </h1>
 
-                        <p class="text-xs sm:text-base lg:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                            Explore our comprehensive gallery of 50+ custom-produced videos — ranging from premium D2C brand commercials and financial explainers to global study campaigns and emotional story films.
-                        </p>
+                    <p class="text-xs sm:text-sm lg:text-[15px] text-white/95 max-w-xl leading-relaxed hero-text-clean">
+                        Explore our comprehensive gallery of 50+ custom-produced videos — ranging from premium D2C brand commercials and financial explainers to global study campaigns and emotional story films.
+                    </p>
 
-                        <!-- CTAs -->
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-1 w-full">
-                            <a href="#portfolio" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-cyan-500/20 flex items-center justify-center gap-2 group transition-all">
-                                <span>Browse 50 Portfolio Videos</span>
-                                <i data-lucide="arrow-down" class="w-4 h-4 group-hover:translate-y-1 transition-transform"></i>
-                            </a>
-                            <button onclick="openModalById('1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa')" class="w-full sm:w-auto px-5 py-3 rounded-xl glass-card hover:bg-dark-hover text-slate-200 hover:text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all">
-                                <i data-lucide="play-circle" class="w-4 h-4 text-cyan-400"></i>
-                                <span>Watch Spotlight Reel</span>
-                            </button>
-                        </div>
-
-                        <!-- Metric Counters -->
-                        <div class="grid grid-cols-3 gap-2 sm:gap-6 pt-5 sm:pt-8 border-t border-dark-border/60 max-w-lg mx-auto lg:mx-0 text-center sm:text-left w-full">
-                            <div class="p-1 sm:p-0">
-                                <div class="font-display font-bold text-lg sm:text-3xl text-white">50+</div>
-                                <div class="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5 truncate">Videos Produced</div>
-                            </div>
-                            <div class="p-1 sm:p-0">
-                                <div class="font-display font-bold text-lg sm:text-3xl text-cyan-400">5+</div>
-                                <div class="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5 truncate">Industry Sectors</div>
-                            </div>
-                            <div class="p-1 sm:p-0">
-                                <div class="font-display font-bold text-lg sm:text-3xl text-indigo-400">1080p+</div>
-                                <div class="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5 truncate">Master Quality</div>
-                            </div>
-                        </div>
+                    <!-- CTAs (Side-by-side compact on mobile, spacious on desktop) -->
+                    <div class="flex flex-row items-center justify-start gap-2.5 pt-1 w-full">
+                        <a href="#portfolio" class="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-black/40 flex items-center justify-center gap-1.5 transition-all truncate">
+                            <span>Browse 50 Videos</span>
+                            <i data-lucide="arrow-down" class="w-3.5 h-3.5 flex-shrink-0"></i>
+                        </a>
+                        <button onclick="openModalById('1jdO2lXa_hAcCZsiE6VNDMnSyH2Zgf4tA')" class="flex-1 sm:flex-initial px-4 sm:px-5 py-2.5 rounded-xl bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all shadow-lg truncate">
+                            <i data-lucide="play-circle" class="w-3.5 h-3.5 text-cyan-400 flex-shrink-0"></i>
+                            <span>Featured Reel</span>
+                        </button>
                     </div>
 
-                    <!-- Hero Right: Interactive Spotlight Feature -->
-                    <div class="lg:col-span-5 w-full" id="featured">
-                        <div class="relative rounded-2xl p-[1px] bg-gradient-to-b from-cyan-500/40 via-indigo-500/20 to-transparent shadow-2xl shadow-cyan-500/10 w-full">
-                            <div class="bg-dark-surface rounded-2xl overflow-hidden p-3.5 sm:p-5 space-y-3 sm:space-y-4 w-full">
-                                <!-- Card Header -->
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-300">Spotlight Feature</span>
-                                    </div>
-                                    <span class="text-[9px] sm:text-[10px] font-semibold px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Finance & TVC</span>
-                                </div>
-
-                                <!-- Video Preview Thumbnail Container -->
-                                <div class="relative rounded-xl overflow-hidden aspect-video bg-dark-card group cursor-pointer border border-dark-border w-full"
-                                     onclick="openModalById('1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa')">
-                                    <img src="thumbnails/1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa.jpg" 
-                                         alt="BKC Finance Short Brand Movie" 
-                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                         onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/d/1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa=w640'">
-                                    
-                                    <div class="absolute inset-0 bg-dark-base/40 group-hover:bg-dark-base/20 transition-colors flex items-center justify-center">
-                                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-cyan-500/90 text-dark-base flex items-center justify-center shadow-xl shadow-cyan-500/40 group-hover:scale-110 transition-transform">
-                                            <i data-lucide="play" class="w-5 h-5 sm:w-6 sm:h-6 fill-current ml-0.5"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/80 backdrop-blur-sm text-[9px] sm:text-[10px] font-bold text-white flex items-center gap-1">
-                                        <i data-lucide="sparkles" class="w-3 h-3 text-cyan-400"></i>
-                                        <span>Master Cut</span>
-                                    </div>
-                                </div>
-
-                                <!-- Spotlight Info -->
-                                <div>
-                                    <h3 class="font-display font-bold text-sm sm:text-base text-white">BKC Finance Short Brand Movie</h3>
-                                    <p class="text-xs text-slate-400 mt-1 line-clamp-2">A high-engagement corporate brand film combining hyper-realistic AI visuals and compelling financial storytelling.</p>
-                                </div>
-
-                                <button onclick="openModalById('1juU8pgjoOwNnAc8_H4sNLR64jbjzxnCa')" 
-                                        class="w-full py-2 sm:py-2.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold flex items-center justify-center gap-2 transition-colors">
-                                <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
-                                <span>Play in Google Drive Player</span>
-                            </button>
+                    <!-- Metric Counters -->
+                    <div class="grid grid-cols-3 gap-2 sm:gap-6 pt-3 sm:pt-6 border-t border-white/20 max-w-md text-left w-full">
+                        <div class="p-0.5 sm:p-0">
+                            <div class="font-display font-bold text-base sm:text-2xl text-white hero-title-clean">50+</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-200 font-medium mt-0.5 truncate hero-text-clean">Videos Produced</div>
+                        </div>
+                        <div class="p-0.5 sm:p-0">
+                            <div class="font-display font-bold text-base sm:text-2xl text-cyan-400 hero-title-clean">5+</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-200 font-medium mt-0.5 truncate hero-text-clean">Industry Sectors</div>
+                        </div>
+                        <div class="p-0.5 sm:p-0">
+                            <div class="font-display font-bold text-base sm:text-2xl text-indigo-400 hero-title-clean">1080p+</div>
+                            <div class="text-[10px] sm:text-[11px] text-slate-200 font-medium mt-0.5 truncate hero-text-clean">Master Quality</div>
                         </div>
                     </div>
                 </div>
@@ -562,6 +520,7 @@ html_template = f'''<!DOCTYPE html>
             // Hero background video play trigger
             const bgVideo = document.getElementById('heroBgVideo');
             if (bgVideo) {{
+                bgVideo.muted = true;
                 bgVideo.play().catch(() => {{}});
             }}
             
