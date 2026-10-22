@@ -2,6 +2,14 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/video.php",
+      "destination": "/api/video"
+    },
+    {
+      "source": "/api/video.php",
+      "destination": "/api/video"
+    },
+    {
       "source": "/video",
       "destination": "/api/video"
     }

@@ -1,0 +1,8 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# Route /api/video and /video to video.php
+RewriteRule ^api/video/?$ video.php [QSA,L]
+RewriteRule ^video/?$ video.php [QSA,L]
+</IfModule>

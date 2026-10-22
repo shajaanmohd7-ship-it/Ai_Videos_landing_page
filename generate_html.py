@@ -735,13 +735,22 @@ html_template = f'''<!DOCTYPE html>
             player.onwaiting = () => {{
                 if (loader) loader.classList.remove('hidden');
             }};
+            let triedFallback = false;
             player.onerror = () => {{
+                if (!triedFallback) {{
+                    triedFallback = true;
+                    // If /video.php fails, try /api/video (for Vercel)
+                    player.src = `/api/video?id=${{video.id}}`;
+                    player.load();
+                    player.play().catch(() => {{}});
+                    return;
+                }}
                 if (loader) loader.classList.add('hidden');
                 if (errorBox) errorBox.classList.remove('hidden');
             }};
 
-            // Stream directly through same-origin proxy (works on both local server and Vercel)
-            player.src = `/api/video?id=${{video.id}}`;
+            // Stream directly through Hostinger PHP stream or Vercel API
+            player.src = `/video.php?id=${{video.id}}`;
             player.poster = video.thumbnail || video.remoteThumbnail || '';
             player.load();
             player.play().catch(() => {{
